@@ -4,13 +4,11 @@ changeText.innerHTML = 'Randomizer'
 const submitBtn = document.querySelector('.submitBtn')
 submitBtn.addEventListener('click' , e => {
     e.preventDefault()
+    const askAmount = +prompt("How many people?" , 2)
 
-    const askAmount = +prompt("How many people?" , 1)
-
-    if(askAmount <= 1){
-        alert("Участников должно быть больше 1")
+    if(askAmount <= 2){
+        alert("Участников должно быть больше 2")
     }else{
-
         const disappear = document.querySelector('.disappear')
         disappear.classList.add('active')
         changeText.innerHTML = 'Добавление участников'
@@ -33,7 +31,6 @@ submitBtn.addEventListener('click' , e => {
 // showpPLayers //
 function showPLayers(){
     let mainInputs = document.querySelector('.mainInputs')
-
     const getAmount = JSON.parse(localStorage.getItem('askAmount'))
 
     if(mainInputs.value === ''){
@@ -41,7 +38,6 @@ function showPLayers(){
     }else if(mainInputs.value !== ''){
         changeText.innerHTML = 'Список участников'
         const getAmount = JSON.parse(localStorage.getItem('askAmount'))
-
         const add = document.querySelector('.add')
 
         for(let i = 0; i < getAmount; i++){
@@ -52,14 +48,11 @@ function showPLayers(){
                 </li>
             `
             add.insertAdjacentHTML('afterbegin' , arr)
-
             const added = document.querySelector('.disappear2')
             added.classList.add('none')
         }
-
         add.insertAdjacentHTML("beforeend" , `<button onclick='showWinner()' class='btn btn-success'>Показать победителя</button>`)
     }
-
     for(let i = 0; i < getAmount; i++){
         const safe =  document.querySelector(`.Input${i + 1}`)
         if(safe.value === ''){
@@ -70,10 +63,12 @@ function showPLayers(){
 function showWinner(){
     const getAmount = JSON.parse(localStorage.getItem('askAmount'))
     const saver = document.querySelectorAll('.add li')
-    const random = Math.floor(Math.random() * getAmount)
+    const random = Math.floor(Math.random() * getAmount + 1)
     saver.forEach(item => {
         if(item.id == random){
             item.classList.add('bg')
+        }else{
+            item.classList.remove('bg')
         }
     })
 }
